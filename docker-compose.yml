@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:8.0.22
+    container_name: wordflow_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+#  redis:
+#    image: redis:6.0.9
+#    container_name: wordflow_redis
+#    volumes:
+#      - ./redis.conf:/usr/local/etc/redis/redis.conf
+#    command: redis-server /usr/local/etc/redis/redis.conf
+#    ports:
+#      - "6379"
+
+  web:
+    build: .
+    container_name: wordflow_web
+    volumes:
+      - ./bedrock:/var/www/rocketstack
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+#    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "80:80"
+      - "443:443"
