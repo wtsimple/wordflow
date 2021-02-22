@@ -11,6 +11,7 @@ RUN apt-get install -y tmux curl wget php7.3-fpm php7.3-cli php7.3-curl php7.3-g
 RUN apt-get install -y php7.3-mysql php7.3-mbstring php7.3-zip php7.3-xml unzip php7.3-soap php7.3-redis
 # Install Fail2ban although I really think it should be on your server outside the container
 RUN apt-get install -y fail2ban
+# redis
 RUN apt-get install -y redis
 # set the nginx configs
 COPY ./nginx/ /etc/nginx/
@@ -26,5 +27,3 @@ RUN chown www-data:www-data /var/www/ -R
 
 
 CMD service nginx restart && service php7.3-fpm start && redis-server /usr/local/etc/redis/redis.conf  && tail -f /dev/null
-
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
