@@ -20,6 +20,9 @@ COPY ./nginx/ /etc/nginx/
 RUN ln -s /etc/nginx/sites-available/rocketstack.conf /etc/nginx/sites-enabled/
 RUN rm /etc/nginx/sites-enabled/default
 
+#PHP FPM configs
+COPY ./php.ini /etc/php/7.3/fpm/php.ini
+
 # Create needed folders
 RUN mkdir -p /var/www/cache
 RUN mkdir -p /var/www/cache/rocketstack
