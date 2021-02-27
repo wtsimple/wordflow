@@ -17,7 +17,6 @@ services:
     container_name: wordflow_web
     volumes:
       - ./bedrock:/var/www/rocketstack
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "80:80"
       - "443:443"
