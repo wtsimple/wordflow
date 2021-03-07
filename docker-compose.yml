@@ -10,7 +10,12 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - wordflow_data:/var/lib/mysql
 
   web:
     build: .
@@ -20,3 +25,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+volumes:
+  wordflow_data:
+    external: true
