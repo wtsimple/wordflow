@@ -13,16 +13,16 @@ RUN apt-get install -y php7.3-mysql php7.3-mbstring php7.3-zip php7.3-xml unzip 
 # redis
 RUN apt-get install -y redis
 RUN mkdir -p /usr/local/etc/redis
-COPY ./redis.conf /usr/local/etc/redis/redis.conf
+COPY docker_configs/redis.conf /usr/local/etc/redis/redis.conf
 
 # set the nginx configs
-COPY ./nginx/ /etc/nginx/
+COPY docker_configs/nginx /etc/nginx/
 RUN ln -s /etc/nginx/sites-available/rocketstack.conf /etc/nginx/sites-enabled/
 RUN rm /etc/nginx/sites-enabled/default
 
 #PHP FPM configs
-COPY fpm/php.ini /etc/php/7.3/fpm/php.ini
-COPY fpm/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY docker_configs/fpm /etc/php/7.3/fpm/php.ini
+COPY docker_configs/fpm /etc/php/7.3/fpm/pool.d/www.conf
 
 # Create needed folders
 RUN mkdir -p /var/www/cache
