@@ -35,6 +35,6 @@ RUN chmod a+rwx -R /var/www/
 #RUN add-apt-repository -y universe
 #RUN add-apt-repository -y ppa:certbot/certbot
 #RUN apt-get install -y python-certbot-nginx
-#RUN certbot --nginx --non-interactive --agree-tos -m armando.rivero143@gmail.com -d precisalingua.com
+#RUN certbot --nginx --non-interactive --agree-tos -m email_example@gmail.com -d wordflow.test
 
 CMD service nginx restart && service php7.3-fpm start && redis-server /usr/local/etc/redis/redis.conf  && tail -f /dev/null

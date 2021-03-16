@@ -3,7 +3,7 @@
  * Plugin Name: Redis Object Cache Drop-In
  * Plugin URI: http://wordpress.org/plugins/redis-cache/
  * Description: A persistent object cache backend powered by Redis. Supports Predis, PhpRedis, Credis, HHVM, replication, clustering and WP-CLI.
- * Version: 2.0.15
+ * Version: 2.0.17
  * Author: Till Krüss
  * Author URI: https://objectcache.pro
  * License: GPLv3
@@ -380,7 +380,7 @@ class WP_Object_Cache {
     /**
      * Track how long request took.
      *
-     * @var int
+     * @var float
      */
     public $cache_time = 0;
 
@@ -511,12 +511,8 @@ class WP_Object_Cache {
             }
         }
 
-        if ( isset( $parameters['password'] ) ) {
-            $password = $parameters['password'];
-
-            if ( is_null( $password ) || $password === '' ) {
-                unset( $parameters['password'] );
-            }
+        if ( isset( $parameters[ 'password' ] ) && $parameters[ 'password' ] === '' ) {
+            unset( $parameters[ 'password' ] );
         }
 
         return $parameters;
@@ -588,7 +584,7 @@ class WP_Object_Cache {
 
             if ( isset( $parameters['database'] ) ) {
                 if ( ctype_digit( $parameters['database'] ) ) {
-                    $parameters['database'] = intval( $parameters['database'] );
+                    $parameters['database'] = (int) $parameters['database'];
                 }
 
                 $args['database'] = $parameters['database'];
@@ -847,7 +843,7 @@ class WP_Object_Cache {
 
         if ( isset( $parameters['database'] ) ) {
             if ( ctype_digit( $parameters['database'] ) ) {
-                $parameters['database'] = intval( $parameters['database'] );
+                $parameters['database'] = (int) $parameters['database'];
             }
 
             if ( $parameters['database'] ) {
@@ -1103,7 +1099,7 @@ class WP_Object_Cache {
      * @return  bool            Returns TRUE on success or FALSE on failure.
      */
     public function flush( $delay = 0 ) {
-        $delay = abs( intval( $delay ) );
+        $delay = abs( (int) $delay );
 
         if ( $delay ) {
             sleep( $delay );
@@ -1480,6 +1476,7 @@ LUA;
             $results = array_combine(
                 $remaining_keys,
                 $this->redis->mget( $remaining_ids )
+                    ?: array_fill( 0, count( $remaining_ids ), false )
             );
         } catch ( Exception $exception ) {
             $this->handle_exception( $exception );
@@ -1723,10 +1720,10 @@ LUA;
         <?php echo $this->diagnostics['client'] ?: 'Unknown'; ?>
         <br />
         <strong>Cache Hits:</strong>
-        <?php echo intval( $this->cache_hits ); ?>
+        <?php echo (int) $this->cache_hits; ?>
         <br />
         <strong>Cache Misses:</strong>
-        <?php echo intval( $this->cache_misses ); ?>
+        <?php echo (int) $this->cache_misses; ?>
         <br />
         <strong>Cache Size:</strong>
         <?php echo number_format( strlen( serialize( $this->cache ) ) / 1024, 2 ); ?> kB
@@ -1751,6 +1748,8 @@ LUA;
         );
 
         return (object) [
+            // Connected, Disabled, Unknown, Not connected
+            // 'status' => '...',
             'hits' => $this->cache_hits,
             'misses' => $this->cache_misses,
             'ratio' => $total > 0 ? round( $this->cache_hits / ( $total / 100 ), 1 ) : 100,
