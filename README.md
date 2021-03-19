@@ -130,9 +130,9 @@ The `--protocol` parameter is important because, although your database is acces
 
 You have probably seen the `bedrock/config` folder. The `application.php` file there is a configuration file where you can set constants and do whatever needed to dictate the behavior of your application. `bedrock/config/application.php` is always executed regardless of your `WP_ENV`, but the files in `bedrock/config/environments` are environment-dependent, for instance `development.php` will only be executed when `WP_ENV == 'development'` and so on. Hence, you can have your PHP configuration files per each environment there. For the sake of security, you should also have different `.env` and `bedrock/.env` files per environment, with different passwords and salts. And don't forget to set `WP_ENV` appropriately at `bedrock/.env`.
 
-## Do it yourself
+## Collaborate
 
-I'm far from a genius, so if I could do it, you can also create your dockerized high performance WordPress stack, and it might be even better. I would recommend to read the [Rocketstack article](https://www.wpintense.com/2018/10/20/installing-the-fastest-wordpress-stack-ubuntu-18-mysql-8/) and also read about [Bedrock](https://roots.io/bedrock/). On the other hand, if you just want to make a tweak to Wordflow, I'd be more than happy to listen to you. Please, create an issue, pull request or open a discussion at [the github repo](https://github.com/ArmandoRiveroPi/wordflow) or just leave your comment here and I'll get in touch. This is actually my first open source code that might be used by somebody (it's so coooool)
+If you just want to make a tweak to Wordflow, I'd be more than happy to listen to you. Please, create an issue, pull request or open a discussion. This is actually my first open source code that might be used by somebody (it's so coooool)
 
 ## Still missing
 
