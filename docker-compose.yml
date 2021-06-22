@@ -16,7 +16,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - wordflow_data:/var/lib/mysql
-      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./docker_configs/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
 
   web:
     build: .
