@@ -56,7 +56,7 @@ I called the volume `wordflow_data` but you can name it any way you want, just r
 docker volume create --name=wordflow_data
 ```
 
-After you have the volume, move into the `bedrock` directory, there should also be an `bedrock/.env.example` file you can copy into `bedrock/.env`. You'll see the usual WP stuff like database credentials and the security salts that you need to fill. Also, you'll see the parameter `WP_ENV` which is part of the Bedrock genius, because you can use it to separate production, staging and development environments. Anywhere within your code you can check for instance `if(defined('WP_ENV') && WP_ENV === 'production')` and you can take special actions per environment.
+After you have the volume, move into the `bedrock` directory, there should also be an `bedrock/.env.example` file you can copy into `bedrock/.env`. You'll see the usual WP stuff like database credentials and the security salts that you need to fill. Be sure to set `DB_HOST=db` for database connection (`db` is a docker service name here). Also, you'll see the parameter `WP_ENV` which is part of the Bedrock genius, because you can use it to separate production, staging and development environments. Anywhere within your code you can check for instance `if(defined('WP_ENV') && WP_ENV === 'production')` and you can take special actions per environment.
 
 At this point you can build the Docker images running this
 
